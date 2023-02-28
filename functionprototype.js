@@ -141,4 +141,78 @@ const conFun = function () {
 }
 
 const conThis = new conFun();
+console.dir(conThis);
+// if there ie no 'new' keyword 
+//then this is binded to global object like global or window
+conFun();
+console.log(global.name);
 
+//Javascript design pattern for instance making within function
+function A ( arg ){
+    if(!(this instanceof A))
+        return new A ( arge);
+    this.value = arg? arg : 0;
+}
+
+//#5 nominal this binding by call() and apply()
+//someFunction.apply(thisArg, argArray);
+const sameObj = {
+    name : 'soo'
+}
+conFun().apply(sameObj);
+//or conFun().apply(sameObj, argArray);
+//also
+conFun().call(sameObj);
+//or conFun().call(sameObj, arg1, arg2, . . .)
+// these two global object's method is for mapping specific 'this' and function
+// which means, order that change that function's this to input object and call the fucntion 
+
+
+// Function Return 
+// Javascript function has always return value.
+// there are some rules about that feature
+//#1 there is no return statement. that function return undefined
+//#2 about constructor function, if there is no return statemtne, function return prototype object
+// which means, using new make function return object not undefined
+
+
+//-Prototype and Prototype chaining 
+// Javascript provide OOP based on ptototype
+// Every JS object has implicit prototype link
+// same as [[Prototype]]
+
+// JavaScript Object Creation Rules
+// #1 with new keyword and function
+const conFun2 = function () {
+    this.name = 'foo';
+    this.call = function() {
+        console.log(this.name);
+    };
+}
+
+const conThis2 = new conFun();
+//link to function's prototype property
+console.log("look at the __proto__")
+console.dir(conThis2);
+
+// #2 with object literal and prototype chaining
+const OL = {
+    name : 'hifi'
+}
+OL.hasOwnProperty('name');
+// OL is link to Object.prototype so it can use .hasOwnProperty() method
+
+// #3 with object which function makes
+// first link/chain to prototype property
+// second link/chain to Object.prototype
+
+// extension of normal datatype
+// Number, String, Array has own property 
+console.dir(1);
+console.dir('hello');
+console.dir([1,2,3]);
+
+// when function is made, default prototype can be changable 
+// with this, can implement OOP's inheritence concept
+// only user want to read an object's property or execute object's method 
+// prototype chaining occur
